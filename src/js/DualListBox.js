@@ -618,7 +618,7 @@ class DualListBox extends React.Component {
      *
      * @returns {Array}
      */
-    renderOptions(options) {
+    renderOptions(options, disableable) {
         const { allowDuplicates } = this.props;
         const { id } = this.state;
 
@@ -644,6 +644,7 @@ class DualListBox extends React.Component {
                     data-real-value={JSON.stringify(option.value)}
                     id={`${id}-option-${option.value}`}
                     value={value}
+                    disabled={disableable && option.disabled}
                 >
                     {option.label}
                 </option>
@@ -722,8 +723,8 @@ class DualListBox extends React.Component {
             showOrderButtons,
         } = this.props;
         const { id } = this.state;
-        const availableOptions = this.renderOptions(this.filterAvailable(options));
-        const selectedOptions = this.renderOptions(this.filterSelected(options));
+        const availableOptions = this.renderOptions(this.filterAvailable(options), true);
+        const selectedOptions = this.renderOptions(this.filterSelected(options), false);
         const makeAction = (direction, isMoveAll = false) => (
             <Action
                 direction={direction}
